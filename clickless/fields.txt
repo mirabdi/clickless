@@ -1,0 +1,373 @@
+- users
+    1) User
+        -  id ---------------------------- AutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  email ------------------------- CharField
+        -  gender ------------------------ IntegerField
+        -  is_lock ----------------------- BooleanField
+        -  nickname ---------------------- CharField
+        -  aws_user_id ------------------- CharField
+        -  birth_date -------------------- DateField
+
+    2) SignInHistory
+        -  id ---------------------------- AutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  device_name ------------------- CharField
+        -  device_token ------------------ CharField
+        -  email ------------------------- CharField
+        -  language ---------------------- CharField
+        -  os ---------------------------- CharField
+        -  status ------------------------ CharField
+
+    3) UserDelete
+        -  user_id ----------------------- IntegerField
+        -  reason_id --------------------- SmallIntegerField
+        -  created_at -------------------- DateTimeField
+        -  updated_at -------------------- DateTimeField
+
+    4) UserDeleteReason
+        -  id ---------------------------- SmallAutoField
+        -  reason ------------------------ CharField
+        -  created_at -------------------- DateTimeField
+        -  orders ------------------------ IntegerField
+
+    5) AccessCode
+        -  access_code ------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  expired_at -------------------- DateTimeField
+        -  user_id ----------------------- IntegerField
+        -  activated_at ------------------ DateTimeField
+        -  completed_survey_week --------- IntegerField
+
+- pain_management
+    1) Pain
+        -  id ---------------------------- BigAutoField
+        -  answer_id --------------------- BigIntegerField
+        -  category_id ------------------- BigIntegerField
+        -  content ----------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  user_id ----------------------- IntegerField
+        -  feedback_id ------------------- BigIntegerField
+
+    2) PainAnswer
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  category_id ------------------- BigIntegerField
+        -  article_category_id ----------- BigIntegerField
+        -  has_text_area ----------------- BooleanField
+
+    3) PainArea
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  name -------------------------- CharField
+        -  is_right ---------------------- BooleanField
+        -  x ----------------------------- FloatField
+        -  y ----------------------------- FloatField
+
+    4) PainAreaDetail
+        -  id ---------------------------- BigAutoField
+        -  area_id ----------------------- BigIntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  value ------------------------- IntegerField
+        -  pain_id ----------------------- BigIntegerField
+
+    5) PainCategory
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  question_id ------------------- BigIntegerField
+
+    6) PainFeedback
+        -  id ---------------------------- BigAutoField
+        -  content ----------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  category_id ------------------- BigIntegerField
+
+    7) PainQuestion
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  name -------------------------- CharField
+
+- exercises
+    1) Exercise
+        -  id ---------------------------- BigAutoField
+        -  tutorial ---------------------- CharField
+        -  url --------------------------- CharField
+        -  title ------------------------- CharField
+        -  type -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  has_face ---------------------- BooleanField
+
+    2) ExerciseHistory
+        -  id ---------------------------- BigAutoField
+        -  exercise_id ------------------- BigIntegerField
+        -  user_id ----------------------- IntegerField
+        -  created_at -------------------- DateTimeField
+        -  is_face ----------------------- BooleanField
+
+    3) ExerciseTime
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  updated_at -------------------- DateTimeField
+        -  time_since_midnight ----------- IntegerField
+        -  user_id ----------------------- IntegerField
+
+- surveys
+    1) Survey
+        -  id ---------------------------- BigAutoField
+        -  name -------------------------- CharField
+        -  explanation ------------------- CharField
+        -  is_pain ----------------------- BooleanField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  type -------------------------- CharField
+
+    2) SurveyAnswer
+        -  id ---------------------------- BigAutoField
+        -  user_id ----------------------- IntegerField
+        -  question_id ------------------- BigIntegerField
+        -  value ------------------------- IntegerField
+        -  created_at -------------------- DateTimeField
+        -  week -------------------------- IntegerField
+
+    3) SurveyPainAnswer
+        -  id ---------------------------- BigAutoField
+        -  user_id ----------------------- IntegerField
+        -  content ----------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  week -------------------------- IntegerField
+
+    4) SurveyPainAreaDetail
+        -  id ---------------------------- BigAutoField
+        -  survey_pain_answer_id --------- BigIntegerField
+        -  area_id ----------------------- BigIntegerField
+        -  value ------------------------- IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    5) SurveyQuestion
+        -  id ---------------------------- BigAutoField
+        -  type_id ----------------------- BigIntegerField
+        -  question_category_id ---------- BigIntegerField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  question_category ------------- CharField
+        -  survey_id --------------------- IntegerField
+
+    6) SurveyQuestionCategory
+        -  id ---------------------------- BigAutoField
+        -  survey_id --------------------- BigIntegerField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    7) SurveyQuestionType
+        -  id ---------------------------- BigAutoField
+        -  type -------------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    8) SurveyQuestionTypeDetail
+        -  id ---------------------------- BigAutoField
+        -  type_id ----------------------- BigIntegerField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+- content
+    1) Article
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  title ------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  category_id ------------------- BigIntegerField
+
+    2) ArticleCategory
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  is_common --------------------- BooleanField
+
+    3) ArticleDetail
+        -  id ---------------------------- BigAutoField
+        -  article_id -------------------- BigIntegerField
+        -  content ----------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  image ------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  title ------------------------- CharField
+
+    4) ArticleViewHistory
+        -  id ---------------------------- BigAutoField
+        -  article_id -------------------- BigIntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  user_id ----------------------- IntegerField
+
+    5) Banner
+        -  id ---------------------------- BigAutoField
+        -  image ------------------------- CharField
+        -  background_color -------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  orders ------------------------ IntegerField
+        -  route ------------------------- CharField
+        -  deleted_at -------------------- DateTimeField
+        -  title ------------------------- CharField
+        -  subtitle ---------------------- CharField
+        -  index ------------------------- IntegerField
+        -  background_color_swatch ------- CharField
+
+    6) EducationVideo
+        -  id ---------------------------- BigAutoField
+        -  url --------------------------- CharField
+        -  title ------------------------- CharField
+        -  content ----------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    7) EducationVideoViewHistory
+        -  id ---------------------------- BigAutoField
+        -  user_id ----------------------- IntegerField
+        -  video_id ---------------------- BigIntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    8) Meditation
+        -  id ---------------------------- BigAutoField
+        -  url --------------------------- CharField
+        -  title ------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  type -------------------------- CharField
+
+    9) MeditationHistory
+        -  id ---------------------------- BigAutoField
+        -  meditation_id ----------------- BigIntegerField
+        -  user_id ----------------------- IntegerField
+        -  created_at -------------------- DateTimeField
+
+    10) Notice
+        -  id ---------------------------- BigAutoField
+        -  title ------------------------- CharField
+        -  content ----------------------- TextField
+        -  created_at -------------------- DateTimeField
+        -  updated_at -------------------- DateTimeField
+
+    11) PrivacyPolicy
+        -  id ---------------------------- BigAutoField
+        -  title ------------------------- CharField
+        -  content ----------------------- TextField
+        -  created_at -------------------- DateTimeField
+        -  updated_at -------------------- DateTimeField
+
+    12) Term
+        -  id ---------------------------- BigAutoField
+        -  title ------------------------- CharField
+        -  content ----------------------- TextField
+        -  created_at -------------------- DateTimeField
+        -  updated_at -------------------- DateTimeField
+
+- habits
+    1) Habit
+        -  id ---------------------------- BigAutoField
+        -  category_id ------------------- BigIntegerField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    2) HabitAnswer
+        -  id ---------------------------- BigAutoField
+        -  user_id ----------------------- IntegerField
+        -  habit_id ---------------------- BigIntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    3) HabitCategory
+        -  id ---------------------------- BigAutoField
+        -  name -------------------------- CharField
+        -  is_etc ------------------------ BooleanField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    4) HabitViolation
+        -  id ---------------------------- BigAutoField
+        -  answer_id --------------------- BigIntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+- medications
+    1) Drug
+        -  id ---------------------------- BigAutoField
+        -  user_id ----------------------- IntegerField
+        -  name -------------------------- CharField
+        -  type -------------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  finished_at ------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    2) DrugDetail
+        -  id ---------------------------- BigAutoField
+        -  drug_id ----------------------- BigIntegerField
+        -  time -------------------------- IntegerField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+
+    3) DrugType
+        -  id ---------------------------- BigAutoField
+        -  type -------------------------- CharField
+        -  created_at -------------------- DateTimeField
+        -  deleted_at -------------------- DateTimeField
+        -  orders ------------------------ IntegerField
+
+- notifications
+    1) Notification
+        -  id ---------------------------- BigAutoField
+        -  created_at -------------------- DateTimeField
+        -  updated_at -------------------- DateTimeField
+        -  content ----------------------- CharField
+        -  is_read ----------------------- BooleanField
+        -  title ------------------------- CharField
+        -  user_id ----------------------- IntegerField
+        -  type -------------------------- CharField
+
+    2) NotificationCategory
+        -  id ---------------------------- SmallAutoField
+        -  name -------------------------- CharField
+        -  orders ------------------------ IntegerField
+        -  created_at -------------------- DateTimeField
+        -  updated_at -------------------- DateTimeField
+        -  enum_name --------------------- CharField
+
+    3) NotificationExclusion
+        -  id ---------------------------- BigAutoField
+        -  user_id ----------------------- IntegerField
+        -  category_id ------------------- SmallIntegerField
+        -  created_at -------------------- DateTimeField
+
