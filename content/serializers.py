@@ -3,13 +3,14 @@ from core.serializers import CustomSerializer
 from .models import (
     Article, ArticleCategory, ArticleDetail, ArticleViewHistory,
     Banner, EducationVideo, EducationVideoViewHistory,
-    Meditation, MeditationHistory, Notice, PrivacyPolicy, Term
+    Meditation, MeditationHistory, Notice, PrivacyPolicy, Term,
+    ConfidentialTerm, Faq, MedicalDevice
 )
 
 class ArticleSerializer(CustomSerializer):
     class Meta:
         model = Article
-        fields = ['id', 'title', 'orders', 'category_id', 'created_at', 'deleted_at']
+        fields = ['id', 'title', 'orders', 'category', 'created_at', 'deleted_at']
 
 class ArticleCategorySerializer(CustomSerializer):
     class Meta:
@@ -19,12 +20,12 @@ class ArticleCategorySerializer(CustomSerializer):
 class ArticleDetailSerializer(CustomSerializer):
     class Meta:
         model = ArticleDetail
-        fields = ['id', 'article_id', 'content', 'image', 'orders', 'title', 'created_at', 'deleted_at']
+        fields = ['id', 'article', 'content', 'image', 'orders', 'title', 'created_at', 'deleted_at']
 
 class ArticleViewHistorySerializer(CustomSerializer):
     class Meta:
         model = ArticleViewHistory
-        fields = ['id', 'article_id', 'user_id', 'created_at', 'deleted_at']
+        fields = ['id', 'article', 'user', 'created_at', 'deleted_at']
 
 class BannerSerializer(CustomSerializer):
     class Meta:
@@ -40,7 +41,7 @@ class EducationVideoSerializer(CustomSerializer):
 class EducationVideoViewHistorySerializer(CustomSerializer):
     class Meta:
         model = EducationVideoViewHistory
-        fields = ['id', 'user_id', 'video_id', 'created_at', 'deleted_at']
+        fields = ['id', 'user', 'video', 'created_at', 'deleted_at']
 
 class MeditationSerializer(CustomSerializer):
     class Meta:
@@ -50,7 +51,7 @@ class MeditationSerializer(CustomSerializer):
 class MeditationHistorySerializer(CustomSerializer):
     class Meta:
         model = MeditationHistory
-        fields = ['id', 'meditation_id', 'user_id', 'created_at']
+        fields = ['id', 'meditation', 'user', 'created_at']
 
 class NoticeSerializer(CustomSerializer):
     class Meta:
@@ -65,4 +66,22 @@ class PrivacyPolicySerializer(CustomSerializer):
 class TermSerializer(CustomSerializer):
     class Meta:
         model = Term
-        fields = ['id', 'title', 'content', 'created_at', 'updated_at'] 
+        fields = ['id', 'title', 'content', 'created_at', 'updated_at']
+
+class ConfidentialTermSerializer(CustomSerializer):
+    class Meta:
+        model = ConfidentialTerm
+        fields = ['id', 'content', 'created_at', 'deleted_at', 'type']
+        read_only_fields = ['id', 'created_at', 'deleted_at']
+
+class FaqSerializer(CustomSerializer):
+    class Meta:
+        model = Faq
+        fields = ['id', 'created_at', 'deleted_at', 'answer', 'orders', 'question']
+        read_only_fields = ['id', 'created_at', 'deleted_at']
+
+class MedicalDeviceSerializer(CustomSerializer):
+    class Meta:
+        model = MedicalDevice
+        fields = ['id', 'content', 'is_markdown', 'label', 'orders', 'created_at', 'deleted_at']
+        read_only_fields = ['id', 'created_at', 'deleted_at'] 

@@ -3,14 +3,14 @@ from core.views import CustomViewSet
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from authentication.token_auth import AdminTokenAuth
-from .models import User, SignInHistory, UserDelete, UserDeleteReason, AccessCode
+from .models import User, SignInHistory, UserDelete, UserDeleteReason, AccessCode, CustomerInquiry
 from .serializers import (
     UserSerializer, SignInHistorySerializer, UserDeleteSerializer,
-    UserDeleteReasonSerializer, AccessCodeSerializer
+    UserDeleteReasonSerializer, AccessCodeSerializer, CustomerInquirySerializer
 )
 from .representors import (
     UserRepresentor, SignInHistoryRepresentor, UserDeleteRepresentor,
-    UserDeleteReasonRepresentor, AccessCodeRepresentor
+    UserDeleteReasonRepresentor, AccessCodeRepresentor, CustomerInquiryRepresentor
 )
 
 # Create your views here.
@@ -30,6 +30,81 @@ class UserViewSet(CustomViewSet):
     
     # Override default limit
     limit = 20
+
+    @action(detail=True, methods=['get'], url_path='habit_answers')
+    def habit_answers(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'habit_answers')
+    
+    @action(detail=True, methods=['get'], url_path='answers')
+    def survey_answers(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'answers')
+    
+    @action(detail=True, methods=['get'], url_path='pain_answers')
+    def survey_pain_answers(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'pain_answers')
+    
+    @action(detail=True, methods=['get'], url_path='diary_entries')
+    def diary_entries(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'diary_entries')
+
+    @action(detail=True, methods=['get'], url_path='pain_records')
+    def pain_records(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'pain_records')
+
+    @action(detail=True, methods=['get'], url_path='drugs')
+    def drugs(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'drugs')
+
+    @action(detail=True, methods=['get'], url_path='notifications')
+    def notifications(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'notifications')
+
+    @action(detail=True, methods=['get'], url_path='notification_exclusions')
+    def notification_exclusions(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'notification_exclusions')
+
+    @action(detail=True, methods=['get'], url_path='exercise_histories')
+    def exercise_histories(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'exercise_histories')
+
+    @action(detail=True, methods=['get'], url_path='exercise_times')
+    def exercise_times(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'exercise_times')
+
+    @action(detail=True, methods=['get'], url_path='article_view_histories')
+    def article_view_histories(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'article_view_histories')
+
+    @action(detail=True, methods=['get'], url_path='education_video_view_histories')
+    def education_video_view_histories(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'education_video_view_histories')
+
+    @action(detail=True, methods=['get'], url_path='meditation_histories')
+    def meditation_histories(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'meditation_histories')
+
+    @action(detail=True, methods=['get'], url_path='access_codes')
+    def access_codes(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'access_codes')
+
+    @action(detail=True, methods=['get'], url_path='customer_inquiries')
+    def customer_inquiries(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'customer_inquiries')
 
     @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def login(self, request):
@@ -125,6 +200,11 @@ class UserDeleteReasonViewSet(CustomViewSet):
     search_fields = ['reason']
     limit = 20
 
+    @action(detail=True, methods=['get'], url_path='user_deletes')
+    def user_deletes(self, request, pk=None):
+        instance = self.get_object(pk)
+        return self._related_field_action(request, instance, 'user_deletes')
+
 class AccessCodeViewSet(CustomViewSet):
     """
     ViewSet for managing access codes
@@ -136,4 +216,17 @@ class AccessCodeViewSet(CustomViewSet):
     permission_classes = []
     
     search_fields = ['access_code', 'user_id']
+    limit = 20
+
+class CustomerInquiryViewSet(CustomViewSet):
+    """
+    ViewSet for managing customer inquiries
+    """
+    model_manager = CustomerInquiry.objects
+    queryset = CustomerInquiry.objects.all()
+    serializer_class = CustomerInquirySerializer
+    representor_class = CustomerInquiryRepresentor
+    permission_classes = []
+    
+    search_fields = ['inquiry', 'user_id']
     limit = 20

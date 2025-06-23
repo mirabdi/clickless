@@ -19,7 +19,7 @@ django.setup()
 from pain_management.models import Pain, PainCategory, PainArea, PainAreaDetail
 from exercises.models import Exercise, ExerciseHistory, ExerciseTime
 from users.models import User
-from surveys.models import Survey, SurveyAnswer
+from surveys.models import Survey, Answer
 
 def analyze_pain_patterns():
     """Analyze pain patterns and correlations"""
@@ -109,14 +109,14 @@ def analyze_user_behavior():
     for user in User.objects.filter(deleted_at__isnull=True):
         pain_entries = Pain.objects.filter(user_id=user.id, deleted_at__isnull=True).count()
         exercise_completions = ExerciseHistory.objects.filter(user_id=user.id).count()
-        survey_responses = SurveyAnswer.objects.filter(user_id=user.id).count()
+        survey_responses = Answer.objects.filter(user_id=user.id).count()
         
         user_activity.append({
             'user_id': user.id,
             'email': user.email,
             'pain_entries': pain_entries,
             'exercise_completions': exercise_completions,
-            'survey_responses': survey_responses
+            'responses': survey_responses
         })
     
     # User retention analysis
@@ -125,12 +125,12 @@ def analyze_user_behavior():
         first_activity = min(
             Pain.objects.filter(user_id=user.id, deleted_at__isnull=True).values_list('created_at', flat=True).first() or timezone.now(),
             ExerciseHistory.objects.filter(user_id=user.id).values_list('created_at', flat=True).first() or timezone.now(),
-            SurveyAnswer.objects.filter(user_id=user.id).values_list('created_at', flat=True).first() or timezone.now()
+            Answer.objects.filter(user_id=user.id).values_list('created_at', flat=True).first() or timezone.now()
         )
         last_activity = max(
             Pain.objects.filter(user_id=user.id, deleted_at__isnull=True).values_list('created_at', flat=True).last() or timezone.now(),
             ExerciseHistory.objects.filter(user_id=user.id).values_list('created_at', flat=True).last() or timezone.now(),
-            SurveyAnswer.objects.filter(user_id=user.id).values_list('created_at', flat=True).last() or timezone.now()
+            Answer.objects.filter(user_id=user.id).values_list('created_at', flat=True).last() or timezone.now()
         )
         # Make datetimes timezone-unaware
         if hasattr(first_activity, 'tzinfo') and first_activity.tzinfo is not None:

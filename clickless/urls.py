@@ -23,4 +23,11 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('users/', include('users.urls')),
     path('surveys/', include('surveys.urls')),
+    path('content/', include('content.urls')),
+    path('core/', include('core.urls')),
+    path('exercises/', include('exercises.urls')),
+    path('habits/', include('habits.urls')),
+    path('medications/', include('medications.urls')),
+    path('notifications/', include('notifications.urls')),
+    path('pain-management/', include('pain_management.urls')),
 ]

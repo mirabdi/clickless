@@ -137,7 +137,7 @@
         -  deleted_at -------------------- DateTimeField
         -  type -------------------------- CharField
 
-    2) SurveyAnswer
+    2) Answer
         -  id ---------------------------- BigAutoField
         -  user_id ----------------------- IntegerField
         -  question_id ------------------- BigIntegerField
@@ -145,14 +145,14 @@
         -  created_at -------------------- DateTimeField
         -  week -------------------------- IntegerField
 
-    3) SurveyPainAnswer
+    3) PainAnswer
         -  id ---------------------------- BigAutoField
         -  user_id ----------------------- IntegerField
         -  content ----------------------- CharField
         -  created_at -------------------- DateTimeField
         -  week -------------------------- IntegerField
 
-    4) SurveyPainAreaDetail
+    4) PainAreaDetail
         -  id ---------------------------- BigAutoField
         -  survey_pain_answer_id --------- BigIntegerField
         -  area_id ----------------------- BigIntegerField
@@ -160,7 +160,7 @@
         -  created_at -------------------- DateTimeField
         -  deleted_at -------------------- DateTimeField
 
-    5) SurveyQuestion
+    5) Question
         -  id ---------------------------- BigAutoField
         -  type_id ----------------------- BigIntegerField
         -  question_category_id ---------- BigIntegerField
@@ -171,7 +171,7 @@
         -  question_category ------------- CharField
         -  survey_id --------------------- IntegerField
 
-    6) SurveyQuestionCategory
+    6) QuestionCategory
         -  id ---------------------------- BigAutoField
         -  survey_id --------------------- BigIntegerField
         -  name -------------------------- CharField
@@ -179,13 +179,13 @@
         -  created_at -------------------- DateTimeField
         -  deleted_at -------------------- DateTimeField
 
-    7) SurveyQuestionType
+    7) QuestionType
         -  id ---------------------------- BigAutoField
         -  type -------------------------- CharField
         -  created_at -------------------- DateTimeField
         -  deleted_at -------------------- DateTimeField
 
-    8) SurveyQuestionTypeDetail
+    8) QuestionTypeDetail
         -  id ---------------------------- BigAutoField
         -  type_id ----------------------- BigIntegerField
         -  name -------------------------- CharField

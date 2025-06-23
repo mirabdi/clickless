@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, SignInHistory, UserDelete, UserDeleteReason, AccessCode
+from .models import User, SignInHistory, UserDelete, UserDeleteReason, AccessCode, CustomerInquiry
 from core.serializers import CustomSerializer
 from core.representors import CustomRepresentor
 
@@ -9,7 +9,7 @@ class UserSerializer(CustomSerializer):
     """
     class Meta:
         model = User
-        fields = ['id', 'email', 'gender', 'is_lock', 'nickname', 'aws_user_id', 'birth_date', 'created_at']
+        fields = ['id', 'email', 'gender', 'is_lock', 'nickname', 'aws_user', 'birth_date', 'created_at']
         read_only_fields = ['id', 'created_at']
 
 class SignInHistorySerializer(CustomSerializer):
@@ -21,7 +21,7 @@ class SignInHistorySerializer(CustomSerializer):
 class UserDeleteSerializer(CustomSerializer):
     class Meta:
         model = UserDelete
-        fields = ['user_id', 'reason_id', 'created_at', 'updated_at']
+        fields = ['user', 'reason', 'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
 
 class UserDeleteReasonSerializer(CustomSerializer):
@@ -33,5 +33,11 @@ class UserDeleteReasonSerializer(CustomSerializer):
 class AccessCodeSerializer(CustomSerializer):
     class Meta:
         model = AccessCode
-        fields = ['access_code', 'created_at', 'expired_at', 'user_id', 'activated_at', 'completed_survey_week']
+        fields = ['access_code', 'created_at', 'expired_at', 'user', 'activated_at', 'completed_survey_week']
         read_only_fields = ['created_at', 'activated_at']
+
+class CustomerInquirySerializer(CustomSerializer):
+    class Meta:
+        model = CustomerInquiry
+        fields = ['id', 'created_at', 'inquiry', 'user']
+        read_only_fields = ['id', 'created_at']

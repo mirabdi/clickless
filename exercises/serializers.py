@@ -10,9 +10,9 @@ class ExerciseSerializer(CustomSerializer):
 class ExerciseHistorySerializer(CustomSerializer):
     class Meta:
         model = ExerciseHistory
-        fields = ['id', 'exercise_id', 'user_id', 'created_at', 'is_face']
+        fields = ['id', 'exercise', 'user', 'created_at', 'is_face']
 
 class ExerciseTimeSerializer(CustomSerializer):
     class Meta:
         model = ExerciseTime
-        fields = ['id', 'time_since_midnight', 'user_id', 'created_at', 'updated_at'] 
+        fields = ['id', 'time_since_midnight', 'user', 'created_at', 'updated_at'] 

@@ -27,7 +27,7 @@ class CustomManager(models.Manager):
         try:
             path = self._serializer_class_path
             if path is None:
-                path = f"{self.model._meta.app_label}.admin.representors.{self.model.__name__}Representor"
+                path = f"{self.model._meta.app_label}.representors.{self.model.__name__}Representor"
             self._serializer_class = import_string(path)
             return self._serializer_class
         except (ImportError, AttributeError) as e:
@@ -159,7 +159,7 @@ class CustomModel(models.Model):
         else:
             plural = hyphenated_name + 's'
         
-        return f"/{cls._meta.app_label}/admin-api/{plural}"
+        return f"/{cls._meta.app_label}/{plural}"
 
     def meta(self):
         """
@@ -247,3 +247,61 @@ class CustomModel(models.Model):
         Returns the URL for the model instance.
         """
         return f"{self.get_href()}/{self.id}"
+
+
+class AppIntegrity(models.Model):
+    recent_version = models.CharField(max_length=30)
+    created_at = models.DateTimeField()
+    min_version = models.CharField(max_length=30)
+    android_debug_hash = models.CharField(max_length=255)
+    android_release_hash = models.CharField(max_length=255)
+    ios_hash = models.CharField(max_length=255)
+
+    class Meta:
+        
+        db_table = 'v2_app_integrity'
+
+    def __str__(self):
+        return f"App Integrity - Recent: {self.recent_version}, Min: {self.min_version}"
+
+
+class AppIntegrityHistory(models.Model):
+    user_id = models.IntegerField()
+    app_version = models.CharField(max_length=30)
+    status = models.CharField(max_length=10)
+    created_at = models.DateTimeField()
+    mode = models.CharField(max_length=255)
+
+    class Meta:
+        
+        db_table = 'v2_app_integrity_history'
+
+    def __str__(self):
+        return f"App Integrity History - User: {self.user_id}, Version: {self.app_version}, Status: {self.status}"
+
+
+class ClinicalTrialAccess(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    access_key_id = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        
+        db_table = 'clinical_trial_access'
+
+    def __str__(self):
+        return f"Clinical Trial Access - Key: {self.access_key_id or 'No key'}"
+
+
+class CustomAdmin(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    email = models.CharField(unique=True, max_length=254)
+    is_active = models.IntegerField()
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+
+    class Meta:
+        
+        db_table = 'custom_admin'
+
+    def __str__(self):
+        return f"Custom Admin - {self.email}"

@@ -1,44 +1,58 @@
 from django.db import models
+from core.models import CustomModel
+from users.models import User
 
 # Create your models here.
 
-class Habit(models.Model):
+class Habit(CustomModel):
     id = models.BigAutoField(primary_key=True)
-    category_id = models.BigIntegerField()
+    category = models.ForeignKey('HabitCategory', models.DO_NOTHING, related_name='habits')
     name = models.CharField(max_length=50)
-    orders = models.IntegerField(null=True, blank=True, default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
+    orders = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField()
 
     class Meta:
+        
         db_table = 'v2_habit'
 
-class HabitAnswer(models.Model):
+    def __str__(self):
+        return f"{self.name} ({self.category.name})"
+
+class HabitAnswer(CustomModel):
     id = models.BigAutoField(primary_key=True)
-    user_id = models.IntegerField()
-    habit_id = models.BigIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
+    user = models.ForeignKey(User, models.DO_NOTHING, db_column='user_id', related_name='habit_answers')
+    habit = models.ForeignKey(Habit, models.DO_NOTHING, db_column='habit_id', related_name='answers')
+    created_at = models.DateTimeField()
 
     class Meta:
+        
         db_table = 'v2_habit_answer'
 
-class HabitCategory(models.Model):
+    def __str__(self):
+        return f"Habit Answer {self.id} - {self.user.email} - {self.habit.name}"
+
+class HabitCategory(CustomModel):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=50)
-    is_etc = models.BooleanField()
-    orders = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
+    is_etc = models.IntegerField()
+    orders = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField()
 
     class Meta:
+        
         db_table = 'v2_habit_category'
 
-class HabitViolation(models.Model):
+    def __str__(self):
+        return self.name
+
+class HabitViolation(CustomModel):
     id = models.BigAutoField(primary_key=True)
-    answer_id = models.BigIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
+    answer = models.ForeignKey(HabitAnswer, models.DO_NOTHING, related_name='violations')
+    created_at = models.DateTimeField()
 
     class Meta:
+        
         db_table = 'v2_habit_violation'
+
+    def __str__(self):
+        return f"Habit Violation {self.id} - {self.answer.user.email} - {self.answer.habit.name}"
